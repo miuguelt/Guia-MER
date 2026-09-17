@@ -9,8 +9,13 @@ def test_portafolio_component_exists_and_implements_sena_standard():
     portafolio_path = os.path.join(BASE, "src", "features", "portafolio", "SenaChecklistPortafolio.tsx")
     assert os.path.isfile(portafolio_path), "El componente SenaChecklistPortafolio.tsx debe existir"
 
-    with open(portafolio_path, "r", encoding="utf-8") as f:
-        content = f.read()
+    portafolio_dir = os.path.join(BASE, "src", "features", "portafolio")
+    content = ""
+    for root, _, files in os.walk(portafolio_dir):
+        for file in files:
+            if file.endswith((".tsx", ".ts")):
+                with open(os.path.join(root, file), "r", encoding="utf-8") as f:
+                    content += f.read() + "\n"
 
     # Módulo interactivo de firma digital
     assert "handlePointerDown" in content

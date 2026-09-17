@@ -2,7 +2,7 @@ import { Check, Clipboard, Code2, Download, FileCode2, Sparkles } from 'lucide-r
 import { motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
 import { mermaidCode, sqlCode } from '../../data/course'
-import { projectExamples } from '../../data/ai'
+import { projectExamples, type ProjectExample } from '../../data/ai'
 import { realWorldCaseStudies } from '../../data/methodologyData'
 import MermaidPreview from '../../components/MermaidPreview'
 import { downloadText } from '../../lib/exports'
@@ -26,10 +26,21 @@ export default function ProjectLab({ text, projectState, onTextChange, onProject
 
   const checks = useMemo(
     () => [
-      { label: 'Hay al menos 2 entidades candidatas identificadas', pass: /cliente|veh[ií]culo|orden|producto|usuario|biblioteca|libro|aprendiz|pr[eé]stamo|paciente|m[eé]dico|cita|curso|animal|lote|potrero/i.test(text) },
-      { label: 'Aparece al menos un verbo de relación o hecho', pass: /necesita|registra|tiene|solicita|pertenece|vende|atiende|cursa|matricula|rota|acumula|aplica/i.test(text) },
+      {
+        label: 'Hay al menos 2 entidades candidatas identificadas',
+        pass: /cliente|veh[ií]culo|orden|producto|usuario|biblioteca|libro|aprendiz|pr[eé]stamo|paciente|m[eé]dico|cita|curso|animal|lote|potrero|mascota|propietario|servicio|tienda|pedido/i.test(text),
+      },
+      {
+        label: 'Aparece al menos un verbo de relación o hecho',
+        pass: /necesita|registra|tiene|solicita|pertenece|vende|atiende|cursa|matricula|rota|acumula|aplica|presta|realiza|guarda|posee|incluye|entrega/i.test(text),
+      },
       { label: 'El enunciado describe el problema con contexto suficiente', pass: text.trim().length > 60 },
-      { label: 'Cada requisito conecta entidad, relación y prueba', pass: projectState.requirements.length > 0 && projectState.requirements.every((requirement) => requirement.entity.trim() && requirement.relation.trim() && requirement.test.trim()) },
+      {
+        label: 'Cada requisito conecta entidad, relación y prueba',
+        pass:
+          projectState.requirements.length > 0 &&
+          projectState.requirements.every((requirement) => requirement.entity.trim() && requirement.relation.trim() && requirement.test.trim()),
+      },
     ],
     [projectState.requirements, text]
   )
@@ -56,9 +67,46 @@ export default function ProjectLab({ text, projectState, onTextChange, onProject
       onTextChange(study.narrative)
       setDiagramCode(study.mermaid)
       setActiveSqlCode(study.sqlSample)
-      onProjectStateChange({ diagramCode: study.mermaid, sqlCode: study.sqlSample })
+      const topEntities = study.entities.slice(0, 3).map((e) => e.name).join(', ')
+      const mainRel = study.relations[0] ? `${study.relations[0].source} ${study.relations[0].cardinality} ${study.relations[0].target}` : ''
+      const mainTest = `Registrar ${study.entities[0]?.name || 'entidad'} y verificar integridad referencial con sus relaciones asociadas`
+      onProjectStateChange({
+        diagramCode: study.mermaid,
+        sqlCode: study.sqlSample,
+        requirements: [{
+          id: 'REQ-01',
+          text: study.narrative,
+          entity: topEntities,
+          relation: mainRel,
+          test: mainTest,
+          evidence: [],
+          status: 'covered',
+          source: 'learner'
+        }]
+      })
       setValidated(true)
     }
+  }
+
+  const loadExample = (example: ProjectExample) => {
+    onTextChange(example.text)
+    setDiagramCode(example.diagramCode)
+    setActiveSqlCode(example.sqlCode)
+    onProjectStateChange({
+      diagramCode: example.diagramCode,
+      sqlCode: example.sqlCode,
+      requirements: [{
+        id: 'REQ-01',
+        text: example.text,
+        entity: example.requirement.entity,
+        relation: example.requirement.relation,
+        test: example.requirement.test,
+        evidence: [],
+        status: 'covered',
+        source: 'learner'
+      }]
+    })
+    setValidated(true)
   }
 
   return (
@@ -74,7 +122,7 @@ export default function ProjectLab({ text, projectState, onTextChange, onProject
         <div className="lab-score">
           <div className="score-ring">
             <span>{validated ? passed : '—'}</span>
-            <small>/3</small>
+            <small>/{checks.length}</small>
           </div>
           <span>criterios validados</span>
         </div>
@@ -105,12 +153,9 @@ export default function ProjectLab({ text, projectState, onTextChange, onProject
               key={example.label}
               type="button"
               className="soft-button"
-              onClick={() => {
-                onTextChange(example.text)
-                setValidated(false)
-              }}
+              onClick={() => loadExample(example)}
             >
-              {example.label}
+              <Sparkles size={14} /> Cargar {example.label}
             </button>
           ))}
         </div>

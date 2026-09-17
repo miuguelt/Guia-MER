@@ -145,8 +145,236 @@ export const missingTopics = [
   { title: 'OLTP, analítica y NoSQL', why: 'El modelo depende del propósito: operación transaccional, reportes, documentos o grafos.', exercise: 'Explica cuándo separarías el esquema operacional de un modelo dimensional.' },
 ]
 
-export const projectExamples = [
-  { label: 'Biblioteca', text: 'Una biblioteca necesita registrar aprendices, libros, préstamos, fechas de salida y fechas de devolución. Un aprendiz puede tener varios préstamos y un libro puede aparecer en muchos préstamos.' },
-  { label: 'Veterinaria', text: 'Una veterinaria necesita registrar mascotas, propietarios, citas y servicios realizados. Una mascota puede tener muchas citas y cada cita pertenece a un propietario y a una mascota.' },
-  { label: 'Tienda', text: 'Una tienda necesita registrar clientes, pedidos y productos. Un pedido tiene varios productos, un producto puede estar en muchos pedidos y cada línea guarda cantidad y precio acordado.' },
+export interface ProjectExample {
+  label: string
+  text: string
+  diagramCode: string
+  sqlCode: string
+  requirement: {
+    entity: string
+    relation: string
+    test: string
+  }
+}
+
+export const projectExamples: ProjectExample[] = [
+  {
+    label: 'Biblioteca',
+    text: 'Una biblioteca necesita registrar aprendices, libros, préstamos, fechas de salida y fechas de devolución. Un aprendiz puede tener varios préstamos y un libro puede aparecer en muchos préstamos.',
+    diagramCode: `erDiagram
+    APRENDIZ ||--o{ PRESTAMO : "solicita"
+    LIBRO ||--o{ PRESTAMO : "se entrega en"
+
+    APRENDIZ {
+        uuid id_aprendiz PK
+        varchar documento UK
+        varchar nombre_completo
+        varchar email UK
+        varchar telefono
+    }
+    LIBRO {
+        bigint id_libro PK
+        varchar isbn UK
+        varchar titulo
+        varchar autor
+        int ejemplares_disponibles
+    }
+    PRESTAMO {
+        bigint id_prestamo PK
+        uuid id_aprendiz FK
+        bigint id_libro FK
+        date fecha_salida
+        date fecha_devolucion_pactada
+        date fecha_devolucion_real
+        varchar estado
+    }`,
+    sqlCode: `CREATE TABLE aprendiz (
+  id_aprendiz UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  documento VARCHAR(20) NOT NULL UNIQUE,
+  nombre_completo VARCHAR(150) NOT NULL,
+  email VARCHAR(120) NOT NULL UNIQUE,
+  telefono VARCHAR(25)
+);
+
+CREATE TABLE libro (
+  id_libro BIGSERIAL PRIMARY KEY,
+  isbn VARCHAR(20) NOT NULL UNIQUE,
+  titulo VARCHAR(200) NOT NULL,
+  autor VARCHAR(150) NOT NULL,
+  ejemplares_disponibles INTEGER NOT NULL DEFAULT 1 CHECK (ejemplares_disponibles >= 0)
+);
+
+CREATE TABLE prestamo (
+  id_prestamo BIGSERIAL PRIMARY KEY,
+  id_aprendiz UUID NOT NULL REFERENCES aprendiz(id_aprendiz) ON DELETE RESTRICT,
+  id_libro BIGINT NOT NULL REFERENCES libro(id_libro) ON DELETE RESTRICT,
+  fecha_salida DATE NOT NULL DEFAULT CURRENT_DATE,
+  fecha_devolucion_pactada DATE NOT NULL,
+  fecha_devolucion_real DATE,
+  estado VARCHAR(20) NOT NULL DEFAULT 'ACTIVO' CHECK (estado IN ('ACTIVO', 'DEVUELTO', 'MOROSO')),
+  CONSTRAINT chk_fechas CHECK (fecha_devolucion_pactada >= fecha_salida)
+);`,
+    requirement: {
+      entity: 'APRENDIZ, LIBRO, PRESTAMO',
+      relation: 'APRENDIZ 1:N PRESTAMO N:1 LIBRO (N:M)',
+      test: 'Registrar préstamo activo y verificar que fecha de devolución sea posterior o igual a la salida',
+    },
+  },
+  {
+    label: 'Veterinaria',
+    text: 'Una veterinaria necesita registrar mascotas, propietarios, citas y servicios realizados. Una mascota puede tener muchas citas y cada cita pertenece a un propietario y a una mascota.',
+    diagramCode: `erDiagram
+    PROPIETARIO ||--o{ MASCOTA : "posee"
+    MASCOTA ||--o{ CITA_VETERINARIA : "recibe"
+    CITA_VETERINARIA ||--o{ DETALLE_CITA_SERVICIO : "incluye"
+    SERVICIO_VETERINARIO ||--o{ DETALLE_CITA_SERVICIO : "prestado en"
+
+    PROPIETARIO {
+        uuid id_propietario PK
+        varchar documento UK
+        varchar nombre_completo
+        varchar telefono
+        varchar direccion
+    }
+    MASCOTA {
+        bigint id_mascota PK
+        uuid id_propietario FK
+        varchar nombre
+        varchar especie
+        varchar raza
+        date fecha_nacimiento
+    }
+    CITA_VETERINARIA {
+        bigint id_cita PK
+        bigint id_mascota FK
+        timestamptz fecha_hora
+        varchar motivo
+        varchar estado
+    }
+    SERVICIO_VETERINARIO {
+        int id_servicio PK
+        varchar nombre UK
+        numeric precio_base
+    }
+    DETALLE_CITA_SERVICIO {
+        bigint id_cita PK, FK
+        int id_servicio PK, FK
+        int cantidad
+        numeric precio_aplicado
+    }`,
+    sqlCode: `CREATE TABLE propietario (
+  id_propietario UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  documento VARCHAR(20) NOT NULL UNIQUE,
+  nombre_completo VARCHAR(150) NOT NULL,
+  telefono VARCHAR(25) NOT NULL,
+  direccion VARCHAR(180)
+);
+
+CREATE TABLE mascota (
+  id_mascota BIGSERIAL PRIMARY KEY,
+  id_propietario UUID NOT NULL REFERENCES propietario(id_propietario) ON DELETE RESTRICT,
+  nombre VARCHAR(80) NOT NULL,
+  especie VARCHAR(50) NOT NULL,
+  raza VARCHAR(80),
+  fecha_nacimiento DATE
+);
+
+CREATE TABLE cita_veterinaria (
+  id_cita BIGSERIAL PRIMARY KEY,
+  id_mascota BIGINT NOT NULL REFERENCES mascota(id_mascota) ON DELETE RESTRICT,
+  fecha_hora TIMESTAMPTZ NOT NULL,
+  motivo VARCHAR(200) NOT NULL,
+  estado VARCHAR(20) NOT NULL DEFAULT 'PROGRAMADA' CHECK (estado IN ('PROGRAMADA', 'ATENDIDA', 'CANCELADA'))
+);
+
+CREATE TABLE servicio_veterinario (
+  id_servicio SERIAL PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL UNIQUE,
+  precio_base NUMERIC(10,2) NOT NULL CHECK (precio_base >= 0)
+);
+
+CREATE TABLE detalle_cita_servicio (
+  id_cita BIGINT NOT NULL REFERENCES cita_veterinaria(id_cita) ON DELETE CASCADE,
+  id_servicio INTEGER NOT NULL REFERENCES servicio_veterinario(id_servicio) ON DELETE RESTRICT,
+  cantidad INTEGER NOT NULL DEFAULT 1 CHECK (cantidad > 0),
+  precio_aplicado NUMERIC(10,2) NOT NULL CHECK (precio_aplicado >= 0),
+  PRIMARY KEY (id_cita, id_servicio)
+);`,
+    requirement: {
+      entity: 'PROPIETARIO, MASCOTA, CITA_VETERINARIA',
+      relation: 'PROPIETARIO 1:N MASCOTA 1:N CITA_VETERINARIA',
+      test: 'Agendar cita para mascota registrada y liquidar servicios aplicados con su precio',
+    },
+  },
+  {
+    label: 'Tienda',
+    text: 'Una tienda necesita registrar clientes, pedidos y productos. Un pedido tiene varios productos, un producto puede estar en muchos pedidos y cada línea guarda cantidad y precio acordado.',
+    diagramCode: `erDiagram
+    CLIENTE ||--o{ PEDIDO : "realiza"
+    PEDIDO ||--o{ DETALLE_PEDIDO : "contiene"
+    PRODUCTO ||--o{ DETALLE_PEDIDO : "incluido en"
+
+    CLIENTE {
+        uuid id_cliente PK
+        varchar documento UK
+        varchar nombre
+        varchar email UK
+    }
+    PRODUCTO {
+        bigint id_producto PK
+        varchar codigo UK
+        varchar nombre
+        numeric precio_actual
+        int stock
+    }
+    PEDIDO {
+        bigint id_pedido PK
+        uuid id_cliente FK
+        timestamptz fecha_pedido
+        varchar estado
+        numeric total
+    }
+    DETALLE_PEDIDO {
+        bigint id_pedido PK, FK
+        bigint id_producto PK, FK
+        int cantidad
+        numeric precio_unitario
+    }`,
+    sqlCode: `CREATE TABLE cliente (
+  id_cliente UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  documento VARCHAR(20) NOT NULL UNIQUE,
+  nombre VARCHAR(120) NOT NULL,
+  email VARCHAR(120) NOT NULL UNIQUE
+);
+
+CREATE TABLE producto (
+  id_producto BIGSERIAL PRIMARY KEY,
+  codigo VARCHAR(30) NOT NULL UNIQUE,
+  nombre VARCHAR(120) NOT NULL,
+  precio_actual NUMERIC(12,2) NOT NULL CHECK (precio_actual >= 0),
+  stock INTEGER NOT NULL DEFAULT 0 CHECK (stock >= 0)
+);
+
+CREATE TABLE pedido (
+  id_pedido BIGSERIAL PRIMARY KEY,
+  id_cliente UUID NOT NULL REFERENCES cliente(id_cliente) ON DELETE RESTRICT,
+  fecha_pedido TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  estado VARCHAR(20) NOT NULL DEFAULT 'PENDIENTE' CHECK (estado IN ('PENDIENTE', 'PAGADO', 'ENVIADO', 'CANCELADO')),
+  total NUMERIC(12,2) NOT NULL DEFAULT 0.00 CHECK (total >= 0)
+);
+
+CREATE TABLE detalle_pedido (
+  id_pedido BIGINT NOT NULL REFERENCES pedido(id_pedido) ON DELETE CASCADE,
+  id_producto BIGINT NOT NULL REFERENCES producto(id_producto) ON DELETE RESTRICT,
+  cantidad INTEGER NOT NULL CHECK (cantidad > 0),
+  precio_unitario NUMERIC(12,2) NOT NULL CHECK (precio_unitario >= 0),
+  PRIMARY KEY (id_pedido, id_producto)
+);`,
+    requirement: {
+      entity: 'CLIENTE, PEDIDO, PRODUCTO',
+      relation: 'CLIENTE 1:N PEDIDO 1:N DETALLE_PEDIDO N:1 PRODUCTO (N:M)',
+      test: 'Registrar pedido con líneas de detalle y validar congelación de precio unitario',
+    },
+  },
 ]
+
