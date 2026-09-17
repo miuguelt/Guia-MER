@@ -1,0 +1,26 @@
+{
+  "name": "guia-mer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run validate:language && vite --host 127.0.0.1 --port 3010",
+    "validate:language": "node scripts/validate-language.mjs",
+    "build": "npm run validate:language && tsc -b && vite build && node scripts/validate-language.mjs --include-dist",
+    "preview": "vite preview --host 127.0.0.1 --port 3010"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.468.0",
+    "mermaid": "^11.17.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^4.4.1",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  }
+}

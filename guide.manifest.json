@@ -1,0 +1,59 @@
+{
+  "standard": { "id": "devbrain.educational-guide", "version": "2.4.0" },
+  "guide": {
+    "id": "datagenesis-mer-2026",
+    "title": "DataGenesis · Modelado Entidad-Relación y Relacional",
+    "format": "web",
+    "entrypoint": "./index.html",
+    "language": "es-CO",
+    "version": "1.0.0",
+    "summary": "Guía interactiva para pasar de requisitos en lenguaje natural a un primer MER, modelo relacional y diccionario de datos, usando IA con trazabilidad y revisión humana."
+  },
+  "curricularAlignment": {
+    "program": { "code": "POR-CONFIRMAR", "name": "Análisis y Desarrollo de Software (ADSO)" },
+    "competency": { "code": "POR-CONFIRMAR", "name": "Modelar datos de acuerdo con requisitos y reglas de integridad; validar con instructor." },
+    "learningResults": [{ "code": "RAP-POR-CONFIRMAR", "name": "Construir una propuesta inicial de modelo entidad-relación, modelo relacional y diccionario de datos a partir de requisitos." }]
+  },
+  "duration": { "recommendedTotalHours": "160–210 minutos de exploración autónoma; estimación local no oficial", "hours": 3 },
+  "platform": { "sdk": "React 19 + Vite", "storagePrefix": "datagenesis_mer", "modules": 9, "offline": true },
+  "languageContract": {
+    "locale": "es-CO",
+    "rules": "docs/REGLAS-LENGUAJE-ES-CO.md",
+    "policy": "language-policy.json",
+    "validationCommand": "npm run validate:language",
+    "buildGate": true
+  },
+  "project": {
+    "caseStudy": "Taller Ruta 7 (caso integrador) + E-commerce, Clínica y Academia (4 dominios de práctica)",
+    "challenge": "Convertir requisitos en lenguaje natural en un modelo conceptual, modelo relacional normalizado (1FN-3FN) y diccionario de datos trazable.",
+    "finalProduct": "Artefactos locales editables: expediente del caso, diagrama Mermaid ERD, DDL SQL inicial, diccionario Markdown/CSV, Gema reutilizable, plan de validación con IA y ZIP para trabajar sin conexión.",
+    "deliverablesRegistry": "deliverables.registry.json",
+    "checkpoints": [
+      { "id": "CP-01", "name": "Anomalías identificadas", "evidence": "requirements-check", "criterion": "Explica por qué la redundancia produce anomalías de inserción, actualización y borrado." },
+      { "id": "CP-02", "name": "Cardinalidad razonada", "evidence": "mermaid-erd", "criterion": "Formula las dos preguntas de cardinalidad con mínimos y máximos (min, max) y reconoce cuándo nace una tabla puente." },
+      { "id": "CP-03", "name": "Diccionario trazable", "evidence": "data-dictionary", "criterion": "Declara tipo SQL exacto, nulabilidad, restricción (PK, FK, UQ, CHECK) y política referencial para cada campo." },
+      { "id": "CP-04", "name": "IA auditable", "evidence": "ai-method", "criterion": "Usa un asistente con contexto, supuestos visibles y revisión humana; no acepta cardinalidades sin validarlas." },
+      { "id": "CP-05", "name": "Modelo preparado para evolucionar", "evidence": "missing-topics", "criterion": "Aplica normalización formal 1FN-3FN y relaciona el ERD con privacidad, transacciones, pruebas, rendimiento y migraciones." }
+    ]
+  },
+  "learningSequence": [
+    { "phase": "reflection", "name": "Reflexión: ¿qué se rompe en una hoja gigante?", "hours": 0.2 },
+    { "phase": "contextualization", "name": "Contextualización: objetos, hechos y contratos", "hours": 0.3 },
+    { "phase": "appropriation", "name": "Apropiación: cardinalidad, transformación y constraints", "hours": 0.7 },
+    { "phase": "transfer", "name": "Transferencia: laboratorio del proyecto propio", "hours": 0.3 },
+    { "phase": "integration", "name": "Caso integrador: de la evidencia al MER defendible", "hours": 1.2 }
+  ],
+  "evidence": { "knowledge": ["requirements-check", "ai-method"], "performance": ["mermaid-erd"], "product": ["data-dictionary", "missing-topics"] },
+  "assessment": { "instruments": ["Autochequeo formativo local", "Lista de chequeo de modelo", "Revisión con instructor o responsable del negocio"] },
+  "glossary": [
+    { "term": "Entidad", "meaning": "Objeto o concepto del negocio del que se necesitan varias instancias persistentes." },
+    { "term": "Clave foránea", "meaning": "Campo que enlaza una fila con la clave primaria de otra tabla." },
+    { "term": "Cardinalidad", "meaning": "Cantidad mínima y máxima de instancias que pueden relacionarse en cada dirección." }
+  ],
+  "sources": [
+    { "title": "Modelo entidad-relación de Peter Chen", "locator": "Referencia disciplinar; confirmar bibliografía con instructor", "use": "Base conceptual para entidades, atributos y relaciones." },
+    { "title": "Notación Crow's Foot", "locator": "Referencia disciplinar; confirmar convención con instructor", "use": "Lectura visual de cardinalidades y opcionalidad." },
+    { "title": "Reglas de transformación al modelo relacional", "locator": "Adaptación pedagógica local", "use": "Derivación de PK, FK y tablas puente." }
+  ],
+  "boundaries": ["No certifica competencia", "No sustituye validación con negocio o instructor", "La IA puede inventar supuestos y debe auditarse", "Las capacidades y planes de herramientas externas pueden cambiar", "Los datos de ejemplo son ficticios", "El progreso se guarda solo en el dispositivo"]
+}

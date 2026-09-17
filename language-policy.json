@@ -1,0 +1,115 @@
+{
+  "locale": "es-CO",
+  "blockedPatterns": [
+    {
+      "id": "termino-vetado-01",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[dD][oO][sS]{1,2}[iI][eE][rR](?![\\p{L}\\p{N}_-])",
+      "message": "Usa «Portafolio de Evidencias», «Expediente», «Informe» o «Registro Integral de Evidencias»."
+    },
+    {
+      "id": "locale-no-colombia",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[eE][sS][-_][eE][sS](?![\\p{L}\\p{N}_-])",
+      "message": "La interfaz y la documentación deben declarar y usar es-CO."
+    }
+  ],
+  "regionalPatterns": [
+    {
+      "id": "lexico-01",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[oO][rR][dD][eE][nN][aA][dD][oO][rR](?:[eE][sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «computador»."
+    },
+    {
+      "id": "lexico-02",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[fF][iI][cC][hH][eE][rR][oO](?:[sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «archivo»."
+    },
+    {
+      "id": "lexico-03",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[cC][oO][cC][hH][eE](?:[sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "En este contexto usa «carro» o «vehículo»."
+    },
+    {
+      "id": "lexico-04",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[pP][uU][lL][sS](?:[aA][rR]|[aA]|[eE]|[eE][nN]|[aA][nN][dD][oO])(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «hacer clic», «seleccionar» o «presionar»."
+    },
+    {
+      "id": "lexico-05",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[vV][oO][sS][oO][tT][rR][oO](?:[sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «ustedes» o una formulación institucional."
+    },
+    {
+      "id": "lexico-06",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[vV][uU][eE][sS][tT][rR](?:[aA]|[oO]|[aA][sS]|[oO][sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa una formulación directa y clara en español colombiano."
+    },
+    {
+      "id": "lexico-07",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[eE][nN][hH][oO][rR][aA][bB][uU][eE][nN][aA](?![\\p{L}\\p{N}_-])",
+      "message": "Usa «felicitaciones» o «buen trabajo»."
+    },
+    {
+      "id": "lexico-08",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[aA][pP][aA][rR][cC][aA](?:[mM][iI][eE][nN][tT][oO]|[rR])(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «parqueadero» o «estacionar»."
+    },
+    {
+      "id": "lexico-09",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[zZ][uU][mM][oO](?:[sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «jugo»."
+    },
+    {
+      "id": "lexico-10",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[pP][aA][tT][aA][tT][aA](?:[sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «papa»."
+    },
+    {
+      "id": "lexico-11",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[cC][oO][mM][pP][uU][tT][aA][dD][oO][rR][aA](?:[sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «computador»."
+    },
+    {
+      "id": "lexico-12",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[cC][hH][eE][cC][aA][rR](?![\\p{L}\\p{N}_-])",
+      "message": "Usa «revisar», «verificar» o «comprobar»."
+    },
+    {
+      "id": "lexico-13",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[aA][lL][bB][eE][rR][cC][aA](?:[sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «piscina»."
+    },
+    {
+      "id": "lexico-14",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[eE][lL][eE][vV][aA][dD][oO][rR](?:[eE][sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «ascensor»."
+    },
+    {
+      "id": "lexico-15",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[pP][iI][lL][eE][tT][aA](?:[sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «piscina»."
+    },
+    {
+      "id": "lexico-16",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[fF][rR][uU][tT][iI][lL][lL][aA](?:[sS])?(?![\\p{L}\\p{N}_-])",
+      "message": "Usa «fresa»."
+    },
+    {
+      "id": "lexico-17",
+      "pattern": "(?<![\\p{L}\\p{N}_-])[pP][aA][lL][tT][aA](?![\\p{L}\\p{N}_-])",
+      "message": "Usa «aguacate»."
+    }
+  ],
+  "scan": {
+    "directories": ["src", "docs", "public", "tests", "dist"],
+    "files": ["index.html", "package.json", "guide.manifest.json", "deliverables.registry.json"],
+    "extensions": [".ts", ".tsx", ".js", ".jsx", ".mjs", ".css", ".html", ".md", ".json", ".sql", ".mmd", ".txt", ".py"],
+    "ignoredDirectories": ["node_modules", ".git", ".pytest_cache", ".codex"],
+    "ignoredFiles": ["language-policy.json", "scripts/validate-language.mjs"]
+  },
+  "technicalAllowlist": [
+    "Identificadores de código, nombres de paquetes, extensiones, protocolos, URLs y rutas",
+    "Palabras reservadas de TypeScript, JavaScript, CSS, HTML, SQL y Mermaid",
+    "Acrónimos técnicos como API, JSON, SQL, PK, FK, UUID y SENA",
+    "Nombres de tablas, campos y restricciones cuando sean contratos del modelo"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "version": "2.4.0",
+  "standard": "devbrain.educational-guide",
+  "guideId": "datagenesis-mer-2026",
+  "status": "draft-local",
+  "sourceStatus": "Adaptación pedagógica local; validar alineación curricular con instructor.",
+  "submission": {
+    "format": "Carpeta local o repositorio Git con el texto de requisitos y exportaciones Mermaid, SQL, Markdown y CSV.",
+    "where": "Entrega definida por el instructor o por el equipo del proyecto; la web no envía archivos automáticamente.",
+    "whatIsGraded": "Se revisa la coherencia entre requisitos, entidades, cardinalidades, llaves, restricciones y decisiones justificadas.",
+    "approval": ["El requisito contiene contexto, entidades y relaciones.", "Toda relación N:M fue transformada.", "El diccionario declara tipo, nulabilidad y restricciones.", "La revisión humana valida supuestos y preguntas abiertas."],
+    "competencyMap": [
+      { "evidenceType": "conocimiento", "artifacts": ["requirements-check"], "criterion": "Explica anomalías, entidades y atributos con lenguaje propio.", "instrument": "Autochequeo y conversación socrática.", "learningResult": "RAP-POR-CONFIRMAR · Fundamentos de modelado." },
+      { "evidenceType": "desempeño", "artifacts": ["mermaid-erd"], "criterion": "Construye un ERD con cardinalidades y tabla puente cuando corresponde.", "instrument": "Revisión del diagrama.", "learningResult": "RAP-POR-CONFIRMAR · Relaciones y transformación." },
+      { "evidenceType": "producto", "artifacts": ["data-dictionary"], "criterion": "Entrega un diccionario coherente con el modelo y una política referencial explicada.", "instrument": "Lista de chequeo técnica.", "learningResult": "RAP-POR-CONFIRMAR · Modelo físico." },
+      { "evidenceType": "conocimiento", "artifacts": ["ai-method"], "criterion": "Explica cómo usar IA con contexto, supuestos, artefactos versionables y revisión humana.", "instrument": "Ejercicio de auditoría de IA.", "learningResult": "RAP-POR-CONFIRMAR · Uso responsable de herramientas." },
+      { "evidenceType": "producto", "artifacts": ["missing-topics"], "criterion": "Entrega un plan de ampliación que conecta el ERD con seguridad, calidad, pruebas, rendimiento y evolución.", "instrument": "Lista de chequeo de cierre profesional.", "learningResult": "RAP-POR-CONFIRMAR · Diseño preparado para operación." }
+    ]
+  },
+  "artifacts": [
+    {
+      "id": "requirements-check", "code": "MER-EV01", "name": "Autochequeo de requisitos del proyecto", "evidenceType": "conocimiento",
+      "purpose": "Detectar entidades, relaciones y contexto suficiente antes de dibujar.", "inputs": ["Requisito propio", "Preguntas socráticas de la guía"],
+      "instructions": "Escribe un requisito y ejecuta el autochequeo; documenta las preguntas que aún deben validarse con el negocio.", "example": "Una biblioteca necesita registrar aprendices, libros, préstamos y fechas de devolución.",
+      "templateFields": ["Requisito", "Entidades candidatas", "Relaciones candidatas", "Preguntas abiertas"], "criterion": "El texto tiene contexto, al menos dos entidades candidatas y un hecho relacionable.",
+      "instrument": "Autochequeo formativo local.", "evidence": "Texto persistido localmente y lista de señales detectadas.", "nextStep": "Contrastar el requisito con una persona del negocio o instructor.",
+      "station": { "sectionId": "m5-requirements", "order": 1, "phase": "transfer", "minutes": 10 },
+      "fields": [{ "key": "project_brief", "label": "Requisito del proyecto", "type": "area", "hint": "Describe qué necesita registrar el sistema." }],
+      "checklist": ["Hay contexto suficiente", "Las entidades son candidatas, no decisiones finales", "Las preguntas abiertas están visibles"],
+      "aiAssist": { "prompt": "Ayúdame a formular preguntas para validar entidades y relaciones sin inventar decisiones.", "verify": "Contrastar cada pregunta con el negocio o instructor.", "log": "GUIDE_ITERATION_LOG.md" }
+    },
+    {
+      "id": "mermaid-erd", "code": "MER-EV02", "name": "Diagrama Mermaid del modelo conceptual", "evidenceType": "desempeño",
+      "purpose": "Representar entidades, atributos y cardinalidades con una sintaxis portable.", "inputs": ["Entidades candidatas", "Cardinalidades razonadas", "Reglas de transformación"],
+      "instructions": "Revisa el ERD generado, corrige nombres y cardinalidades, y descarga el archivo Mermaid para validarlo en tu herramienta.", "example": "CLIENTE ||--o{ ORDEN_SERVICIO : solicita.",
+      "templateFields": ["Entidades", "Relaciones", "Cardinalidades", "Supuestos"], "criterion": "El diagrama usa erDiagram, tipos de datos y operadores de cardinalidad estándar.",
+      "instrument": "Revisión visual y sintáctica.", "evidence": "Archivo .mmd descargable.", "nextStep": "Derivar el modelo relacional y revisar las FK.",
+      "station": { "sectionId": "m5-mermaid", "order": 2, "phase": "appropriation", "minutes": 15 },
+      "fields": [{ "key": "mermaid_model", "label": "Diagrama Mermaid", "type": "code", "hint": "Mantén la cardinalidad explícita." }],
+      "checklist": ["No hay entidades aisladas sin explicación", "Toda N:M tiene tabla puente", "Las PK y FK están justificadas"],
+      "aiAssist": { "prompt": "Revisa la sintaxis de este ERD Mermaid y señala supuestos, sin decidir por mí.", "verify": "Comparar con la regla de cardinalidad y el requisito original.", "log": "GUIDE_ITERATION_LOG.md" }
+    },
+    {
+      "id": "data-dictionary", "code": "MER-EV03", "name": "Diccionario de datos y política referencial", "evidenceType": "producto",
+      "purpose": "Hacer visibles los tipos, restricciones y decisiones de integridad.", "inputs": ["Modelo relacional", "Reglas PK/FK/UQ/NN", "Política ON DELETE"],
+      "instructions": "Completa el diccionario, selecciona una política referencial y exporta Markdown, CSV o DDL para revisarlo fuera de la guía.", "example": "id_cliente UUID NOT NULL PK; documento VARCHAR(20) NOT NULL UQ.",
+      "templateFields": ["Tabla", "Campo", "Tipo", "Tamaño", "Nulabilidad", "Restricción", "Descripción"], "criterion": "Cada campo tiene tipo, nulabilidad, restricción y descripción coherentes.",
+      "instrument": "Lista de chequeo técnica.", "evidence": "Diccionario Markdown/CSV y DDL SQL inicial.", "nextStep": "Probar el esquema contra casos de inserción, actualización y borrado.",
+      "station": { "sectionId": "m4-dictionary", "order": 3, "phase": "appropriation", "minutes": 20 },
+      "fields": [{ "key": "dictionary_rows", "label": "Filas del diccionario", "type": "table", "hint": "Una fila por campo persistido." }],
+      "checklist": ["Las PK son técnicas o justificadas", "Las FK apuntan a campos existentes", "La política de borrado está explicada"],
+      "aiAssist": { "prompt": "Ayúdame a detectar inconsistencias de tipos y restricciones en este diccionario.", "verify": "Comparar cada hallazgo con el modelo y el motor SQL objetivo.", "log": "GUIDE_ITERATION_LOG.md" }
+    },
+    {
+      "id": "ai-method", "code": "MER-EV04", "name": "Gema y método de trabajo con IA", "evidenceType": "conocimiento",
+      "purpose": "Demostrar un uso reproducible y auditable de asistentes para explorar requisitos y revisar modelos.", "inputs": ["Gema Arquitecto MER & Relacional ADSO", "Requisito de ejemplo", "Matriz de herramientas"],
+      "instructions": "Copia la Gema, prueba el caso de una biblioteca, marca las afirmaciones riesgosas y registra qué supuestos debe validar una persona.", "example": "La IA propone una relación; el aprendiz pregunta por mínimos, máximos y obligatoriedad antes de aceptarla.",
+      "templateFields": ["Instrucción usada", "Archivos/contexto", "Supuestos", "Correcciones humanas", "Pruebas ejecutadas"], "criterion": "Distingue propuesta de IA, evidencia y decisión validada.",
+      "instrument": "Ejercicio formativo de auditoría.", "evidence": "Gema descargada y lista de decisiones revisadas.", "nextStep": "Guardar la instrucción y el ERD junto al proyecto, sin datos personales reales.",
+      "station": { "sectionId": "m6-ai", "order": 4, "phase": "appropriation", "minutes": 25 },
+      "fields": [{ "key": "ai_method", "label": "Método IA", "type": "text", "hint": "Contexto, supuestos, validaciones y correcciones." }],
+      "checklist": ["El asistente recibe contexto suficiente", "Los supuestos están marcados", "La salida se prueba y revisa con una persona"],
+      "aiAssist": { "prompt": "Critica este proceso de modelado sin inventar reglas del negocio.", "verify": "Revisar la crítica contra el requisito y las pruebas.", "log": "GUIDE_ITERATION_LOG.md" }
+    },
+    {
+      "id": "missing-topics", "code": "MER-EV05", "name": "Plan de cierre profesional", "evidenceType": "producto",
+      "purpose": "Relacionar el diseño de datos con operación, seguridad, calidad y evolución del sistema.", "inputs": ["ERD", "Diccionario", "Lista de temas complementarios"],
+      "instructions": "Selecciona los temas que debes tratar y escribe una práctica verificable para cada uno antes de entregar el modelo.", "example": "Una migración agrega un campo obligatorio sin romper las filas existentes.",
+      "templateFields": ["Tema", "Riesgo", "Práctica", "Evidencia", "Responsable de validar"], "criterion": "El plan incluye controles de normalización, privacidad, pruebas y cambio de esquema.",
+      "instrument": "Lista de chequeo de cierre profesional.", "evidence": "Plan de ampliación local y control cruzado del modelo.", "nextStep": "Revisar el plan con el equipo antes de implementar el DDL.",
+      "station": { "sectionId": "m7-topics", "order": 5, "phase": "transfer", "minutes": 20 },
+      "fields": [{ "key": "missing_topics", "label": "Temas complementarios", "type": "checklist", "hint": "Marca cada tema que debe acompañar al ERD." }],
+      "checklist": ["Hay casos de prueba", "La PII tiene controles", "El esquema puede evolucionar mediante migraciones"],
+      "aiAssist": { "prompt": "Sugiere casos límite para probar este modelo, sin convertirlos en requisitos no confirmados.", "verify": "Elegir solo casos alineados con el dominio.", "log": "GUIDE_ITERATION_LOG.md" }
+    },
+    {
+      "id": "guided-case-package", "code": "MER-EV06", "name": "Caso integrador: expediente de análisis y MER defendible", "evidenceType": "producto",
+      "purpose": "Practicar el ciclo completo desde entrevistas, encuesta y documentos hasta un MER con trazabilidad.",
+      "inputs": ["Expediente ficticio del Taller Ruta 7", "Requisitos funcionales y no funcionales", "Plantilla de análisis"],
+      "instructions": "Lee las fuentes, responde los nueve pasos guiados, construye tu MER y compáralo con el resultado esperado. Descarga el ZIP para trabajar sin conexión.",
+      "example": "Una orden contiene servicios, puede requerir varios técnicos, consume repuestos y recibe abonos; cada relación se justifica con fuentes y cardinalidad.",
+      "templateFields": ["Alcance", "Matriz de evidencia", "RF/RNF", "Entidades y atributos", "Cardinalidades", "Supuestos", "MER", "Pruebas"],
+      "criterion": "Traza cada decisión desde la evidencia y representa entidades, atributos, cardinalidades, tablas puente y restricciones sin ocultar preguntas abiertas.",
+      "instrument": "Ejercicio guiado, comparación con solución orientativa y defensa técnica.",
+      "evidence": "ZIP con 13 archivos para trabajar sin conexión, cuaderno Markdown, MER Mermaid y DDL SQL orientativo.",
+      "nextStep": "Llevar el modelo propio a revisión con el instructor o con una persona del negocio.",
+      "station": { "sectionId": "m8-guided-case", "order": 6, "phase": "integration", "minutes": 70 },
+      "fields": [{ "key": "guided_case", "label": "Expediente y modelo del caso", "type": "package", "hint": "Conserva evidencia, decisiones y preguntas abiertas junto al MER." }],
+      "checklist": ["El alcance está delimitado", "RF y RNF tienen fuente", "N:M fue resuelta", "El resultado esperado puede defenderse", "Las preguntas abiertas siguen visibles"],
+      "aiAssist": { "prompt": "Revisa la trazabilidad de mi análisis y señala preguntas abiertas; no inventes reglas del negocio.", "verify": "Comparar cada señal con una fuente del expediente y una prueba.", "log": "GUIDE_ITERATION_LOG.md" }
+    }
+  ]
+}
