@@ -33,12 +33,30 @@ export interface BeginnerGuideStep {
   detail: string
 }
 
+export interface AnchorExample {
+  title: string
+  description: string
+  entities: string[]
+  resolution: string
+}
+
+export interface ScalabilityConcept {
+  type: string
+  title: string
+  description: string
+}
+
 export interface BeginnerGuide {
   title: string
   whatIs: string
   analogy: string
+  triggerWord: string
+  triggerExplanation: string
   whatItDoes: string[]
   whatItDoesNot: string[]
+  finalDeliverables: string[]
+  anchorExample: AnchorExample
+  scalability: ScalabilityConcept[]
   howToStart: BeginnerGuideStep[]
   worksWithAny: string
 }

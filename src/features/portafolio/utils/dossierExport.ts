@@ -53,8 +53,11 @@ export function exportDossierJson({
       type: e.type,
       instrument: e.instrument,
       criterion: e.criterion,
+      beginnerExplanation: e.beginnerExplanation,
+      indicators: e.indicators,
       status: e.isCompleted ? 'CUMPLIDO' : 'PENDIENTE',
       diagnostic: e.diagnosticObs,
+      recoveryAction: e.recoveryAction,
     })),
     projectBrief: progressState.projectText,
     dictionaryRowsCount: progressState.dictionary.length,
@@ -128,12 +131,15 @@ export function exportDossierMarkdown({
     ),
     '',
     '### 3. Lista de Chequeo y Criterios de Auto-revisión',
-    '| Criterio Evaluado | Auto-revisión | Diagnóstico Técnico |',
-    '|---|---|---|',
-    ...evidences.map(
-      (e) =>
-        `| ${e.criterion} | **${e.isCompleted ? '[ X ] SÍ  [   ] NO' : '[   ] SÍ  [ X ] NO'}** | ${e.diagnosticObs} |`
-    ),
+    '| Código | Criterio de Evaluación e Indicadores Observables | Auto-revisión | Diagnóstico Técnico |',
+    '|---|---|---|---|',
+    ...evidences.map((e) => {
+      const indicatorsText =
+        e.indicators && e.indicators.length > 0
+          ? '<br>' + e.indicators.map((ind) => `${ind.pass ? '✓' : '○'} ${ind.label}`).join('<br>')
+          : ''
+      return `| **${e.code}** | ${e.criterion}${indicatorsText} | **${e.isCompleted ? '[ X ] SÍ  [   ] NO' : '[   ] SÍ  [ X ] NO'}** | ${e.diagnosticObs} |`
+    }),
     '',
     '### 4. Dictamen Formativo y Observaciones',
     `- **Resultado Orientativo:** ${isFullyApproved ? 'APROBADO (A)' : 'REQUIERE AJUSTES (EN PROCESO)'} (${progressPercent}% de avance)`,

@@ -14,7 +14,8 @@
       { "evidenceType": "desempeño", "artifacts": ["mermaid-erd"], "criterion": "Construye un ERD con cardinalidades y tabla puente cuando corresponde.", "instrument": "Revisión del diagrama.", "learningResult": "RAP-POR-CONFIRMAR · Relaciones y transformación." },
       { "evidenceType": "producto", "artifacts": ["data-dictionary"], "criterion": "Entrega un diccionario coherente con el modelo y una política referencial explicada.", "instrument": "Lista de chequeo técnica.", "learningResult": "RAP-POR-CONFIRMAR · Modelo físico." },
       { "evidenceType": "conocimiento", "artifacts": ["ai-method"], "criterion": "Explica cómo usar IA con contexto, supuestos, artefactos versionables y revisión humana.", "instrument": "Ejercicio de auditoría de IA.", "learningResult": "RAP-POR-CONFIRMAR · Uso responsable de herramientas." },
-      { "evidenceType": "producto", "artifacts": ["missing-topics"], "criterion": "Entrega un plan de ampliación que conecta el ERD con seguridad, calidad, pruebas, rendimiento y evolución.", "instrument": "Lista de chequeo de cierre profesional.", "learningResult": "RAP-POR-CONFIRMAR · Diseño preparado para operación." }
+      { "evidenceType": "producto", "artifacts": ["missing-topics"], "criterion": "Entrega un plan de ampliación que conecta el ERD con seguridad, calidad, pruebas, rendimiento y evolución.", "instrument": "Lista de chequeo de cierre profesional.", "learningResult": "RAP-POR-CONFIRMAR · Diseño preparado para operación." },
+      { "evidenceType": "producto", "artifacts": ["guided-case-package"], "criterion": "Traza el levantamiento de requisitos (entrevistas, encuestas, documentos) hacia el diagrama Mermaid y DDL SQL defendible.", "instrument": "Ejercicio guiado y defensa técnica.", "learningResult": "RAP-POR-CONFIRMAR · Caso integrador de modelado relacional." }
     ]
   },
   "artifacts": [

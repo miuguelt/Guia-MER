@@ -3,43 +3,76 @@ import type { AiTool, BeginnerGuide, GemaLevelInfo } from './types'
 export const gemaLevels: GemaLevelInfo[] = [
   {
     id: 'seed', emoji: '🌱', label: 'Semilla', shortLabel: 'Semilla',
-    description: 'Tu primer contacto con la IA como copiloto. Sin jerga, con analogías y preguntas simples.',
+    description: 'Tu mentor interactivo paso a paso. Escribe «inicia» y la Gema te guía con preguntas reflexivas y sin jerga.',
     color: 'lime',
   },
   {
     id: 'sprout', emoji: '🌿', label: 'Brote', shortLabel: 'Brote',
-    description: 'Ya conoces entidades y atributos. Ahora agregas reglas, cardinalidad y un diagrama Mermaid.',
+    description: 'Estructuración con reglas. Cardinalidad bidireccional (min, max), tipos de datos y diagrama Mermaid.',
     color: 'amber',
   },
   {
     id: 'root', emoji: '🌳', label: 'Raíz', shortLabel: 'Raíz',
-    description: 'Nivel profesional completo. DDL SQL, normalización 3FN, políticas de integridad y auditoría.',
+    description: 'Arquitecto Senior completo. DDL PostgreSQL 3FN, integridad física ON DELETE y escalabilidad.',
     color: 'violet',
   },
 ]
 
 export const beginnerGuide: BeginnerGuide = {
-  title: '¿Qué es una Gema?',
-  whatIs: 'Una Gema es una instrucción detallada que le das a una IA para que te ayude de una forma específica. En vez de escribir todo desde cero cada vez, copias la Gema, la pegas en tu IA favorita y ella ya sabe exactamente cómo ayudarte.',
-  analogy: 'Imagina que contratas a un asistente nuevo. Si solo le dices "ayúdame", no sabe por dónde empezar. Pero si le entregas un manual con instrucciones claras —qué preguntar, cómo organizar y qué errores evitar— te va a ayudar mucho mejor. La Gema es ese manual.',
+  title: '¿Cómo te ayuda una Gema a pensar y construir el MER?',
+  whatIs: 'Una Gema es un mentor interactivo de arquitectura de datos configurado con instrucciones pedagógicas. No es un oráculo que te arroja código de golpe; te enseña a razonar el sistema paso a paso, descubriendo entidades, relaciones y reglas antes de dibujar el diagrama.',
+  analogy: 'Imagina que tienes a un Arquitecto Senior sentado a tu lado. En lugar de hacer la tarea por ti o darte un bloque incomprensible de SQL, te hace preguntas clave para que entiendas el negocio y te ayuda a convertir esa comprensión en una base de datos profesional y escalable.',
+  triggerWord: 'inicia',
+  triggerExplanation: 'Solo debes pegar la instrucción en tu IA favorita (Gemini, ChatGPT, Claude) y escribir la palabra «inicia». La Gema tomará el control pedagógico: te saludará, te dirá qué van a construir juntos y te hará la primera pregunta.',
   whatItDoes: [
-    'Te guía para analizar un problema paso a paso',
-    'Te ayuda a identificar qué información necesita guardar un sistema',
-    'Te hace preguntas cuando algo no está claro',
-    'Genera diagramas y código que puedes usar directamente',
+    'Te guía paso a paso desde el comando «inicia» para que aprendas a pensar el modelo',
+    'Te ayuda a diferenciar entidades reales con ciclo de vida de simples atributos',
+    'Resuelve relaciones complejas (muchos a muchos) mediante tablas asociativas',
+    'Genera el diagrama visual Mermaid y el script SQL DDL con integridad referencial',
+    'Te explica cómo hacer tu sistema estable y preparado para escalar vertical y horizontalmente',
   ],
   whatItDoesNot: [
-    'No piensa por ti: tú decides si la respuesta es correcta',
-    'No inventa reglas del negocio: solo trabaja con lo que tú le das',
-    'No reemplaza hablar con el cliente o el instructor',
-    'No garantiza que el resultado sea perfecto sin revisión',
+    'No te arroja un montón de código sin que entiendas las decisiones de diseño',
+    'No asume reglas que el negocio no ha confirmado: marca todo con [POR VALIDAR]',
+    'No guarda listas de datos en una sola celda (respeta la Primera Forma Normal)',
+    'No reemplaza tu criterio: tú eres quien aprueba el modelo final',
+  ],
+  finalDeliverables: [
+    'Diccionario formal de Entidades y Atributos con tipos de datos estándar',
+    'Matriz de Cardinalidad bidireccional con notación (min, max)',
+    'Diagrama visual Mermaid (erDiagram) compilable y listo para renderizar',
+    'Script DDL SQL en PostgreSQL con restricciones (PK, FK, CHECK, ON DELETE RESTRICT)',
+    'Estrategia de Estabilidad y Escalabilidad (crecimiento vertical y horizontal)',
+  ],
+  anchorExample: {
+    title: 'El caso ancla canónico: Facturación (Cliente, Producto, Factura y Detalle)',
+    description: 'Un Cliente compra Productos generando una Factura. Como un producto puede venderse en muchas facturas y una factura tiene muchos productos (N:M), creamos la entidad intermedia DETALLE_FACTURA.',
+    entities: [
+      'CLIENTE: Entidad independiente (quién realiza la compra)',
+      'PRODUCTO: Catálogo maestro (qué se ofrece, con precio actual)',
+      'FACTURA: Evento transaccional de cabecera (cuándo se compró y total)',
+      'DETALLE_FACTURA: Entidad asociativa (unidades y precio histórico congelado al momento de venta)',
+    ],
+    resolution: 'Esta estructura resuelve la relación N:M, congela el valor histórico de la venta y protege la contabilidad con ON DELETE RESTRICT.',
+  },
+  scalability: [
+    {
+      type: 'vertical',
+      title: 'Escalabilidad Vertical (Scale-Up)',
+      description: 'Tipos de datos atómicos y precisos (NUMERIC para dinero, TIMESTAMPTZ) con índices B-Tree en cada clave foránea (FK). Permite que el servidor procese millones de registros por segundo sin saturar la memoria RAM.',
+    },
+    {
+      type: 'horizontal',
+      title: 'Escalabilidad Horizontal (Scale-Out)',
+      description: 'Claves técnicas inmutables (UUID o BIGSERIAL) que permiten distribuir registros entre múltiples servidores o separar módulos (inventario, facturación, envíos) en microservicios independientes sin conflicto de identidades.',
+    },
   ],
   howToStart: [
-    { icon: '📋', title: 'Elige tu nivel', detail: 'Empieza con Semilla si es tu primera vez. Sube a Brote cuando te sientas cómodo.' },
-    { icon: '📝', title: 'Copia la instrucción', detail: 'Usa el botón "Copiar" para llevar la Gema a tu portapapeles.' },
-    { icon: '🤖', title: 'Abre tu IA favorita', detail: 'Funciona con Gemini, ChatGPT, Claude o cualquier IA de conversación.' },
-    { icon: '📌', title: 'Pega y escribe tu caso', detail: 'Primero pega la Gema, luego escribe la descripción de tu sistema debajo.' },
-    { icon: '✅', title: 'Revisa y registra', detail: 'Lee la respuesta, marca lo que aceptas y lo que necesitas verificar.' },
+    { icon: '📋', title: '1. Elige tu nivel', detail: 'Empieza con 🌱 Semilla si estás aprendiendo. Pasa a 🌿 Brote o 🌳 Raíz para más rigor.' },
+    { icon: '📝', title: '2. Copia la instrucción', detail: 'Usa el botón "Copiar instrucción" para llevar la Gema al portapapeles.' },
+    { icon: '🤖', title: '3. Abre tu IA favorita', detail: 'Funciona en Gemini, ChatGPT, Claude o Copilot sin configuraciones adicionales.' },
+    { icon: '💬', title: '4. Pega y escribe «inicia»', detail: 'Pega la instrucción y envía la palabra «inicia». La Gema arrancará la mentoría guiada.' },
+    { icon: '🏆', title: '5. Construye tu MER final', detail: 'Responde a las preguntas de cada hito y recibe tu diagrama, DDL y análisis de escalabilidad.' },
   ],
   worksWithAny: 'Las Gemas funcionan con cualquier IA de conversación: Gemini, ChatGPT, Claude, Copilot y más. No estás atado a una herramienta.',
 }
@@ -97,11 +130,11 @@ export const aiTools: AiTool[] = [
 ]
 
 export const aiWorkflow = [
-  { step: '01', title: 'Descubrir antes de dibujar', detail: 'Pide a la IA que extraiga hechos, actores, eventos, reglas y preguntas abiertas; todavía no tablas.' },
-  { step: '02', title: 'Conversar con el dominio', detail: 'Valida las frases "uno con cuántos" en ambas direcciones y registra mínimos, máximos y obligatoriedad.' },
-  { step: '03', title: 'Construir el conceptual', detail: 'Nombra entidades en singular, separa atributos multivalorados y conserva el lenguaje del negocio.' },
-  { step: '04', title: 'Derivar el relacional', detail: 'Migra FK en 1:N, crea puente en N:M y decide el lado dependiente en 1:1 con una justificación.' },
-  { step: '05', title: 'Renderizar como código', detail: 'Genera Mermaid o DBML, guárdalo en Git y compara cambios; el lienzo visual es una vista, no la fuente de verdad.' },
-  { step: '06', title: 'Probar y endurecer', detail: 'Simula alta, cambio y borrado; revisa PK, FK, NN, UQ, índices, privacidad, transacciones y políticas de borrado.' },
-  { step: '07', title: 'Revisión humana', detail: 'Entrega supuestos, decisiones y preguntas sin resolver para que el negocio o instructor apruebe el modelo.' },
+  { step: '01', title: 'Activar con «inicia»', detail: 'Pega la instrucción en la IA y escribe «inicia». La Gema se presenta y declara el entregable final.' },
+  { step: '02', title: 'Delimitar el negocio', detail: 'Describe tu idea. La Gema filtra entidades reales con ciclo de vida frente a simples atributos.' },
+  { step: '03', title: 'Atributos y PK técnica', detail: 'Define tipos atómicos y asigna claves primarias técnicas (UUID o BIGSERIAL) para garantizar estabilidad.' },
+  { step: '04', title: 'Cardinalidad bidireccional', detail: 'Formula las preguntas (min, max) en ambos sentidos y resuelve relaciones N:M con tablas asociativas.' },
+  { step: '05', title: 'Integridad y escalabilidad', detail: 'Aplica ON DELETE RESTRICT, normalización 1FN-3FN y verifica cómo el modelo soporta crecimiento vertical y horizontal.' },
+  { step: '06', title: 'Recibir el MER definitivo', detail: 'Copia el diccionario de datos, el diagrama compilable en Mermaid y el script SQL DDL ejecutable.' },
+  { step: '07', title: 'Revisión humana y bitácora', detail: 'Valida con tu instructor o cliente las dudas marcadas con [POR VALIDAR] y registra tus decisiones.' },
 ]

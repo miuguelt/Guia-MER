@@ -10,6 +10,12 @@ export interface SenaChecklistPortafolioProps {
   onToast: (msg: string) => void
 }
 
+export interface EvidenceIndicator {
+  label: string
+  pass: boolean
+  tip?: string
+}
+
 export interface EvidenceItem {
   id: string
   code: string
@@ -22,4 +28,7 @@ export interface EvidenceItem {
   isCompleted: boolean
   detail: string
   diagnosticObs: string
+  beginnerExplanation?: string
+  indicators?: EvidenceIndicator[]
+  recoveryAction?: string
 }

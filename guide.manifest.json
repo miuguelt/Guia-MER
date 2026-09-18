@@ -33,7 +33,8 @@
       { "id": "CP-02", "name": "Cardinalidad razonada", "evidence": "mermaid-erd", "criterion": "Formula las dos preguntas de cardinalidad con mínimos y máximos (min, max) y reconoce cuándo nace una tabla puente." },
       { "id": "CP-03", "name": "Diccionario trazable", "evidence": "data-dictionary", "criterion": "Declara tipo SQL exacto, nulabilidad, restricción (PK, FK, UQ, CHECK) y política referencial para cada campo." },
       { "id": "CP-04", "name": "IA auditable", "evidence": "ai-method", "criterion": "Usa un asistente con contexto, supuestos visibles y revisión humana; no acepta cardinalidades sin validarlas." },
-      { "id": "CP-05", "name": "Modelo preparado para evolucionar", "evidence": "missing-topics", "criterion": "Aplica normalización formal 1FN-3FN y relaciona el ERD con privacidad, transacciones, pruebas, rendimiento y migraciones." }
+      { "id": "CP-05", "name": "Modelo preparado para evolucionar", "evidence": "missing-topics", "criterion": "Aplica normalización formal 1FN-3FN y relaciona el ERD con privacidad, transacciones, pruebas, rendimiento y migraciones." },
+      { "id": "CP-06", "name": "Caso integrador defendible", "evidence": "guided-case-package", "criterion": "Traza entrevistas, encuesta y documentos hasta requisitos, entidades, cardinalidades, tablas asociativas y un MER verificable." }
     ]
   },
   "learningSequence": [
@@ -43,12 +44,18 @@
     { "phase": "transfer", "name": "Transferencia: laboratorio del proyecto propio", "hours": 0.3 },
     { "phase": "integration", "name": "Caso integrador: de la evidencia al MER defendible", "hours": 1.2 }
   ],
-  "evidence": { "knowledge": ["requirements-check", "ai-method"], "performance": ["mermaid-erd"], "product": ["data-dictionary", "missing-topics"] },
+  "evidence": { "knowledge": ["requirements-check", "ai-method"], "performance": ["mermaid-erd"], "product": ["data-dictionary", "missing-topics", "guided-case-package"] },
   "assessment": { "instruments": ["Autochequeo formativo local", "Lista de chequeo de modelo", "Revisión con instructor o responsable del negocio"] },
   "glossary": [
     { "term": "Entidad", "meaning": "Objeto o concepto del negocio del que se necesitan varias instancias persistentes." },
-    { "term": "Clave foránea", "meaning": "Campo que enlaza una fila con la clave primaria de otra tabla." },
-    { "term": "Cardinalidad", "meaning": "Cantidad mínima y máxima de instancias que pueden relacionarse en cada dirección." }
+    { "term": "Clave primaria", "meaning": "Atributo o identificador técnico que identifica de forma única e inmutable a cada fila de una tabla." },
+    { "term": "Clave foránea", "meaning": "Campo que enlaza una fila con la clave primaria de otra tabla para conservar integridad." },
+    { "term": "Cardinalidad", "meaning": "Cantidad mínima y máxima de instancias que pueden relacionarse en cada dirección." },
+    { "term": "Tabla puente (asociativa)", "meaning": "Tabla intermedia para resolver relaciones N:M, con llaves foráneas de ambas tablas y datos propios de la unión." },
+    { "term": "Integridad referencial", "meaning": "Regla que impide registros huérfanos: toda clave foránea debe corresponder a un registro existente en la tabla padre." },
+    { "term": "Restricción (Constraint)", "meaning": "Regla de validación SQL (PK, FK, NOT NULL, UNIQUE, CHECK) que impide datos corruptos en la base de datos." },
+    { "term": "Normalización", "meaning": "Metodología sistemática (1FN a 3FN) para eliminar redundancias y evitar anomalías al guardar datos." },
+    { "term": "Atomicidad", "meaning": "Regla de 1FN donde cada celda guarda un único dato simple, sin listas separadas por comas ni múltiples valores." }
   ],
   "sources": [
     { "title": "Modelo entidad-relación de Peter Chen", "locator": "Referencia disciplinar; confirmar bibliografía con instructor", "use": "Base conceptual para entidades, atributos y relaciones." },

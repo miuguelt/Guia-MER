@@ -84,30 +84,95 @@ export default function MissingTopicsLab({ onComplete }: Props) {
       </section>
 
       <section className="integration-lab panel-card">
-        <div>
-          <span className="eyebrow">Control Cruzado Pre-Entrega</span>
-          <h2>Lista de Chequeo del Arquitecto de Datos</h2>
-          <p>
-            Antes de entregar tu modelo al instructor o equipo de desarrollo, verifica: ¿puedo insertar, modificar y auditar sin perder la única fuente de verdad (SSoT)?
-          </p>
+        <div className="card-heading">
+          <div>
+            <span className="eyebrow">Control Cruzado Pre-Entrega</span>
+            <h2>Lista de Chequeo del Arquitecto de Datos</h2>
+          </div>
+          <span className="section-note">Auditoría formativa de calidad</span>
         </div>
-        <div className="integration-checks">
-          <span><Check size={14} /> Requisitos ↔ Entidades aprobadas</span>
-          <span><Check size={14} /> Cardinalidad (Min..Max) ↔ FKs ubicadas</span>
-          <span><Check size={14} /> Constraints ↔ Pruebas de borde</span>
-          <span><Check size={14} /> 1FN, 2FN, 3FN ↔ Tablas descompuestas</span>
-          <span><Check size={14} /> Políticas ON DELETE ↔ Seguridad contable</span>
+        <p>
+          Antes de entregar tu modelo al instructor o equipo de desarrollo, hazte estas 5 preguntas fundamentales. En una base de datos profesional, cada decisión protege la única fuente de verdad (SSoT, <i>Single Source of Truth</i>):
+        </p>
+
+        <div className="beginner-audit-grid">
+          <div className="beginner-audit-item">
+            <div className="audit-item-header">
+              <span className="audit-number">01</span>
+              <h4>Requisitos ↔ Entidades aprobadas</h4>
+            </div>
+            <p className="audit-desc">
+              ¿Cada sustantivo clave del problema tiene su propia tabla y no quedaron datos aislados?
+            </p>
+            <div className="audit-tip">
+              <strong>Tip de principiante:</strong> Si el taller registra repuestos o mecánicos, cada uno debe tener su propia tabla con varias filas, no ser una simple nota de texto dentro de la orden.
+            </div>
+          </div>
+
+          <div className="beginner-audit-item">
+            <div className="audit-item-header">
+              <span className="audit-number">02</span>
+              <h4>Cardinalidad (Min..Max) ↔ FKs ubicadas</h4>
+            </div>
+            <p className="audit-desc">
+              ¿Las llaves foráneas (FK) quedaron en la tabla hija (lado N) y toda relación N:M tiene su tabla puente?
+            </p>
+            <div className="audit-tip">
+              <strong>Tip de principiante:</strong> La llave foránea siempre viaja hacia el lado de los «muchos». Jamás coloques la FK en la tabla padre (lado 1).
+            </div>
+          </div>
+
+          <div className="beginner-audit-item">
+            <div className="audit-item-header">
+              <span className="audit-number">03</span>
+              <h4>Restricciones (Constraints) ↔ Pruebas de borde</h4>
+            </div>
+            <p className="audit-desc">
+              ¿Definiste <code>NOT NULL</code> en campos obligatorios, <code>UNIQUE</code> en documentos y <code>CHECK</code> en valores válidos?
+            </p>
+            <div className="audit-tip">
+              <strong>Tip de principiante:</strong> Las restricciones protegen la base de datos de usuarios distraídos o errores en el frontend. Si un precio no puede ser negativo, añade <code>CHECK (tarifa &gt; 0)</code>.
+            </div>
+          </div>
+
+          <div className="beginner-audit-item">
+            <div className="audit-item-header">
+              <span className="audit-number">04</span>
+              <h4>1FN, 2FN, 3FN ↔ Tablas descompuestas</h4>
+            </div>
+            <p className="audit-desc">
+              ¿Eliminaste listas separadas por comas (1FN), atributos dependientes de parte de la clave (2FN) y datos calculables (3FN)?
+            </p>
+            <div className="audit-tip">
+              <strong>Tip de principiante:</strong> Si actualizar el nombre de una categoría te obliga a modificar 100 productos, tu modelo viola 3FN y requiere una tabla aparte para la categoría.
+            </div>
+          </div>
+
+          <div className="beginner-audit-item">
+            <div className="audit-item-header">
+              <span className="audit-number">05</span>
+              <h4>Políticas ON DELETE ↔ Seguridad contable</h4>
+            </div>
+            <p className="audit-desc">
+              ¿Protegiste los registros transaccionales con <code>ON DELETE RESTRICT</code> para no borrar historiales por error?
+            </p>
+            <div className="audit-tip">
+              <strong>Tip de principiante:</strong> En sistemas reales, casi nunca se usa <code>CASCADE</code> en clientes o pedidos: si borras un cliente, no puedes borrar mágicamente sus facturas ya pagadas.
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="final-cta">
         <div>
-          <span className="eyebrow">Ruta Completa</span>
-          <h2>Del mundo real a un modelo defendible.</h2>
-          <p>Has recorrido la ruta completa desde el punto cero hasta el diseño relacional profesional con trazabilidad total.</p>
+          <span className="eyebrow">Siguiente Paso</span>
+          <h2>Aplica todo en un caso real del entorno productivo.</h2>
+          <p>
+            Has completado la arquitectura conceptual, el algoritmo de derivación, el diccionario de datos y las dimensiones operativas. Es momento de resolver el <strong>Caso Integrador: Taller Ruta 7</strong> para consolidar todas tus evidencias de aprendizaje.
+          </p>
         </div>
         <button className="primary-button" disabled={!allSelected} type="button" onClick={onComplete}>
-          {allSelected ? 'Generar Lista de Chequeo y Documento SENA' : `Revisa las ${missingTopics.length} dimensiones`} <Check size={16} />
+          {allSelected ? 'Avanzar al Caso Integrador (Estación 08)' : `Revisa las ${missingTopics.length} dimensiones`} <Check size={16} />
         </button>
       </section>
     </motion.div>

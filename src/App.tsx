@@ -91,7 +91,7 @@ function App() {
       case 'm4': return <DictionaryLab savedRows={state.dictionary} onSave={(rows) => { setDictionary(rows); setToast('Borrador del diccionario guardado'); window.setTimeout(() => setToast(''), 2400) }} onComplete={() => complete('m4', 'm5')} />
       case 'm5': return <ProjectLab text={state.projectText} projectState={state.projectState} onTextChange={setProjectText} onProjectStateChange={updateProjectState} onComplete={() => complete('m5', 'm6')} />
       case 'm6': return <AIWorkflowLab savedLog={state.aiLog} onSaveLog={setAiLog} onComplete={() => complete('m6', 'm7')} />
-      case 'm7': return <MissingTopicsLab onComplete={() => complete('m7', 'portafolio')} />
+      case 'm7': return <MissingTopicsLab onComplete={() => complete('m7', 'case')} />
       case 'case': return <GuidedCase onComplete={() => complete('case', 'portafolio')} />
       case 'portafolio': return (
         <SenaChecklistPortafolio
