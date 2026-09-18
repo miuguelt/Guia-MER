@@ -77,7 +77,7 @@ export default function SignaturePad({
   const applySignature = () => {
     const canvas = canvasRef.current
     if (!canvas || !hasDrawn) {
-      alert('Por favor dibuje su firma en el recuadro antes de aplicarla.')
+      onToast('Por favor dibuja tu firma en el recuadro antes de aplicarla.')
       return
     }
     const dataUrl = canvas.toDataURL('image/png')

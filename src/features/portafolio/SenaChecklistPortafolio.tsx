@@ -31,7 +31,21 @@ export default function SenaChecklistPortafolio({
   const currentSignature = profile.signature
 
   const handlePrint = () => {
+    const prevTitle = document.title
+    const safeFicha = (profile.ficha || 'ADSO').trim().replace(/\s+/g, '_')
+    const safeId = (profile.docNumber || profile.name || 'aprendiz').trim().replace(/\s+/g, '_')
+    document.title = `Registro_Evidencias_SENA_${safeFicha}_${safeId}`
+
+    const restoreTitle = () => {
+      document.title = prevTitle
+      window.removeEventListener('afterprint', restoreTitle)
+    }
+    window.addEventListener('afterprint', restoreTitle)
+
     window.print()
+
+    // Respaldo de seguridad en caso de que el navegador no emita el evento afterprint
+    setTimeout(restoreTitle, 2000)
   }
 
   const handleDownloadJson = () => {

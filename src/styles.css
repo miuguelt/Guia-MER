@@ -1570,9 +1570,16 @@ button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid var
     size: letter portrait;
     margin: 10mm 12mm;
   }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  html,
   body {
     background: #ffffff !important;
     color: #000000 !important;
+    overflow: visible !important;
+    height: auto !important;
   }
   .sidebar,
   .topbar,
@@ -1604,22 +1611,35 @@ button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid var
     box-shadow: none !important;
     width: 100% !important;
     max-width: 100% !important;
-    page-break-inside: avoid;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    page-break-inside: auto !important;
+    break-inside: auto !important;
   }
   .evidence-header-table {
     border: 2px solid #39a900 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  .evidence-section {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
   }
   .evidence-subtitle {
     border-bottom: 2px solid #39a900 !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+  .evidence-table {
+    border-collapse: collapse !important;
+  }
+  .evidence-table thead {
+    display: table-header-group !important;
+  }
+  .evidence-table tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
   .evidence-table th {
     background: #f1f5f9 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
   }
   .badge--success {
     background: #dcfce7 !important;
@@ -1636,10 +1656,30 @@ button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid var
     color: #92400e !important;
     border: 1px solid #d97706 !important;
   }
+  .evidence-verdict-box {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  .evidence-declaration {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  .evidence-signatures-grid {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-top: 20px !important;
+  }
+  .signature-column {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
   .signature-digital-tag {
     background: #dcfce7 !important;
     color: #166534 !important;
     border: 1px solid #16a34a !important;
+  }
+  a[href]:after {
+    content: "" !important;
   }
 }
 
