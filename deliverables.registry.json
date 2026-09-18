@@ -27,7 +27,7 @@
       "station": { "sectionId": "m5-requirements", "order": 1, "phase": "transfer", "minutes": 10 },
       "fields": [{ "key": "project_brief", "label": "Requisito del proyecto", "type": "area", "hint": "Describe qué necesita registrar el sistema." }],
       "checklist": ["Hay contexto suficiente", "Las entidades son candidatas, no decisiones finales", "Las preguntas abiertas están visibles"],
-      "aiAssist": { "prompt": "Ayúdame a formular preguntas para validar entidades y relaciones sin inventar decisiones.", "verify": "Contrastar cada pregunta con el negocio o instructor.", "log": "GUIDE_ITERATION_LOG.md" }
+      "aiAssist": { "prompt": "Analiza este requisito crudo: extrae límites del sistema, actores, eventos transaccionales y formula 3 preguntas clave sobre reglas ambiguas sin asumir decisiones del negocio.", "verify": "Contrastar cada pregunta con el negocio o instructor.", "log": "GUIDE_ITERATION_LOG.md" }
     },
     {
       "id": "mermaid-erd", "code": "MER-EV02", "name": "Diagrama Mermaid del modelo conceptual", "evidenceType": "desempeño",
@@ -38,7 +38,7 @@
       "station": { "sectionId": "m5-mermaid", "order": 2, "phase": "appropriation", "minutes": 15 },
       "fields": [{ "key": "mermaid_model", "label": "Diagrama Mermaid", "type": "code", "hint": "Mantén la cardinalidad explícita." }],
       "checklist": ["No hay entidades aisladas sin explicación", "Toda N:M tiene tabla puente", "Las PK y FK están justificadas"],
-      "aiAssist": { "prompt": "Revisa la sintaxis de este ERD Mermaid y señala supuestos, sin decidir por mí.", "verify": "Comparar con la regla de cardinalidad y el requisito original.", "log": "GUIDE_ITERATION_LOG.md" }
+      "aiAssist": { "prompt": "Audita la topología de este ERD Mermaid: verifica que toda relación N:M tenga tabla puente con sus atributos propios, valida que las FK estén en el lado dependiente y señala supuestos estructurales.", "verify": "Comparar con la regla de cardinalidad y el requisito original.", "log": "GUIDE_ITERATION_LOG.md" }
     },
     {
       "id": "data-dictionary", "code": "MER-EV03", "name": "Diccionario de datos y política referencial", "evidenceType": "producto",
@@ -49,18 +49,18 @@
       "station": { "sectionId": "m4-dictionary", "order": 3, "phase": "appropriation", "minutes": 20 },
       "fields": [{ "key": "dictionary_rows", "label": "Filas del diccionario", "type": "table", "hint": "Una fila por campo persistido." }],
       "checklist": ["Las PK son técnicas o justificadas", "Las FK apuntan a campos existentes", "La política de borrado está explicada"],
-      "aiAssist": { "prompt": "Ayúdame a detectar inconsistencias de tipos y restricciones en este diccionario.", "verify": "Comparar cada hallazgo con el modelo y el motor SQL objetivo.", "log": "GUIDE_ITERATION_LOG.md" }
+      "aiAssist": { "prompt": "Audita la integridad de este diccionario: comprueba tipos SQL exactos (NUMERIC vs FLOAT, TIMESTAMPTZ), nulabilidad estricta, restricciones CHECK y justifica la política ON DELETE (RESTRICT vs CASCADE).", "verify": "Comparar cada hallazgo con el modelo y el motor SQL objetivo.", "log": "GUIDE_ITERATION_LOG.md" }
     },
     {
       "id": "ai-method", "code": "MER-EV04", "name": "Gema y método de trabajo con IA", "evidenceType": "conocimiento",
-      "purpose": "Demostrar un uso reproducible y auditable de asistentes para explorar requisitos y revisar modelos.", "inputs": ["Gema Arquitecto MER & Relacional ADSO", "Requisito de ejemplo", "Matriz de herramientas"],
+      "purpose": "Demostrar un uso reproducible y auditable de asistentes para explorar requisitos y revisar modelos.", "inputs": ["Suite de Herramientas de Prompts de Ingeniería", "Requisito de ejemplo", "Matriz de herramientas"],
       "instructions": "Copia la Gema, prueba el caso de una biblioteca, marca las afirmaciones riesgosas y registra qué supuestos debe validar una persona.", "example": "La IA propone una relación; el aprendiz pregunta por mínimos, máximos y obligatoriedad antes de aceptarla.",
       "templateFields": ["Instrucción usada", "Archivos/contexto", "Supuestos", "Correcciones humanas", "Pruebas ejecutadas"], "criterion": "Distingue propuesta de IA, evidencia y decisión validada.",
       "instrument": "Ejercicio formativo de auditoría.", "evidence": "Gema descargada y lista de decisiones revisadas.", "nextStep": "Guardar la instrucción y el ERD junto al proyecto, sin datos personales reales.",
       "station": { "sectionId": "m6-ai", "order": 4, "phase": "appropriation", "minutes": 25 },
       "fields": [{ "key": "ai_method", "label": "Método IA", "type": "text", "hint": "Contexto, supuestos, validaciones y correcciones." }],
       "checklist": ["El asistente recibe contexto suficiente", "Los supuestos están marcados", "La salida se prueba y revisa con una persona"],
-      "aiAssist": { "prompt": "Critica este proceso de modelado sin inventar reglas del negocio.", "verify": "Revisar la crítica contra el requisito y las pruebas.", "log": "GUIDE_ITERATION_LOG.md" }
+      "aiAssist": { "prompt": "Evalúa este diseño relacional contra las 3 anomalías de Codd (inserción, actualización, borrado) y reglas 1FN-3FN. Separa hechos confirmados de hipótesis técnicas sin generar texto burocrático.", "verify": "Revisar la crítica contra el requisito y las pruebas.", "log": "GUIDE_ITERATION_LOG.md" }
     },
     {
       "id": "missing-topics", "code": "MER-EV05", "name": "Plan de cierre profesional", "evidenceType": "producto",
@@ -71,7 +71,7 @@
       "station": { "sectionId": "m7-topics", "order": 5, "phase": "transfer", "minutes": 20 },
       "fields": [{ "key": "missing_topics", "label": "Temas complementarios", "type": "checklist", "hint": "Marca cada tema que debe acompañar al ERD." }],
       "checklist": ["Hay casos de prueba", "La PII tiene controles", "El esquema puede evolucionar mediante migraciones"],
-      "aiAssist": { "prompt": "Sugiere casos límite para probar este modelo, sin convertirlos en requisitos no confirmados.", "verify": "Elegir solo casos alineados con el dominio.", "log": "GUIDE_ITERATION_LOG.md" }
+      "aiAssist": { "prompt": "Diseña casos de prueba límite para estresar la integridad del esquema (duplicación de llaves naturales, borrado de padres protegidos, violaciones de CHECK y concurrencia).", "verify": "Elegir solo casos alineados con el dominio.", "log": "GUIDE_ITERATION_LOG.md" }
     },
     {
       "id": "guided-case-package", "code": "MER-EV06", "name": "Caso integrador: expediente de análisis y MER defendible", "evidenceType": "producto",
@@ -87,7 +87,7 @@
       "station": { "sectionId": "m8-guided-case", "order": 6, "phase": "integration", "minutes": 70 },
       "fields": [{ "key": "guided_case", "label": "Expediente y modelo del caso", "type": "package", "hint": "Conserva evidencia, decisiones y preguntas abiertas junto al MER." }],
       "checklist": ["El alcance está delimitado", "RF y RNF tienen fuente", "N:M fue resuelta", "El resultado esperado puede defenderse", "Las preguntas abiertas siguen visibles"],
-      "aiAssist": { "prompt": "Revisa la trazabilidad de mi análisis y señala preguntas abiertas; no inventes reglas del negocio.", "verify": "Comparar cada señal con una fuente del expediente y una prueba.", "log": "GUIDE_ITERATION_LOG.md" }
+      "aiAssist": { "prompt": "Traza el flujo integral de este caso: desde los eventos y reglas del negocio hasta el DDL normalizado y el diagrama Mermaid, verificando que no queden cabos sueltos en el modelo de datos.", "verify": "Comparar cada señal con una fuente del expediente y una prueba.", "log": "GUIDE_ITERATION_LOG.md" }
     }
   ]
 }

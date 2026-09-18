@@ -106,3 +106,17 @@
 - **Cambio:** `projectState` ahora conserva `diagramCode` y `sqlCode`; al cargar un caso de estudio los artefactos se guardan junto con el requisito.
 - **Calidad:** el módulo 05 muestra validaciones locales de ERD, tablas SQL y campos del esquema. Son detectores de integridad básica, no una aprobación semántica automática.
 - **Verificación:** `tsc -b` y `pytest` pasan; se mantiene pendiente la compilación Vite por el `spawn EPERM` ambiental.
+
+## 2026-09-17 · Iteración 13
+
+- **Necesidad detectada:** Los prompts contenían meta-instrucciones docentes improductivas (como «Usa siempre aprendiz, nunca alumno») que carecían de sentido cuando el aprendiz las copiaba para analizar un sistema real. Asimismo, los prompts no debían convertirse en generadores de documentación burocrática inflada, sino en herramientas activas de ingeniería de software enfocadas en comprender a fondo el sistema bajo análisis (actores, límites, eventos, ciclo de vida, invariantes de datos, cardinalidad bidireccional y DDL ejecutable).
+- **Cambios realizados:**
+  - **Eliminación de meta-instrucciones:** Se purgó cualquier instrucción de estilo interno de los prompts (`gema-arquitecto-mer-relacional.md`, `src/data/ai.ts`, etc.).
+  - **Suite de 4 herramientas de ingeniería:** Se modularizó la asistencia en una suite técnica especializada:
+    1. *Arquitecto MER & Relacional:* De la narrativa del negocio a Mermaid y PostgreSQL DDL 3FN.
+    2. *Deconstructor de Dominio y Procesos:* Descubrimiento de límites del sistema, eventos, actores y máquinas de estado.
+    3. *Auditor de Cardinalidades y Reglas Ocultas:* Análisis bidireccional `(min, max)` y dimensión temporal del vínculo.
+    4. *Motor DDL e Integridad Operacional:* Generación de esquemas PostgreSQL blindados con restricciones `CHECK`, políticas `ON DELETE` e índices, libres de texto burocrático.
+  - **Laboratorio interactivo de IA (`AIWorkflowLab.tsx`):** Se implementó un selector de pestañas para alternar entre las 4 herramientas de ingeniería, con copiado al portapapeles, descarga individual en `.md` y visualización del momento de uso en el ciclo de desarrollo.
+  - **Registro de entregables (`deliverables.registry.json`):** Se actualizaron las instrucciones de asistencia técnica (`aiAssist`) de `MER-EV01` a `MER-EV06` para orientarlas a la resolución de problemas de ingeniería sin fricción documental.
+- **Verificación:** Validación de lenguaje es-CO (`scripts/validate-language.mjs`), pruebas unitarias `pytest` y compilación completa de producción `npm run build`.

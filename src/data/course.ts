@@ -37,8 +37,8 @@ export const courseModules: CourseModule[] = [
     description: 'Lleva el método a tus propios requisitos y exporta un primer artefacto.', color: 'blue',
   },
   {
-    key: 'm6', number: '06', eyebrow: 'IA con criterio', title: 'La IA como copiloto', shortTitle: 'IA y la Gema',
-    description: 'Usa una Gema reutilizable para preguntar mejor, construir el ERD y verificar sus supuestos.', color: 'cyan',
+    key: 'm6', number: '06', eyebrow: 'IA con criterio', title: 'La IA como copiloto', shortTitle: 'IA paso a paso',
+    description: 'Aprende a usar la IA como copiloto desde cero: empieza con preguntas simples y avanza hasta construir modelos completos.', color: 'cyan',
   },
   {
     key: 'm7', number: '07', eyebrow: 'Cierre profesional', title: 'Lo que completa el modelo', shortTitle: 'Temas que faltan',
