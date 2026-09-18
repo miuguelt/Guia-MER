@@ -254,6 +254,40 @@ export default function SpreadsheetLab({ onComplete }: { onComplete: () => void 
           Entendí las anomalías y quiero modelar <ArrowRight size={15} />
         </button>
       </section>
+
+      {/* PUENTE METODOLÓGICO HACIA NORMALIZACIÓN FORMAL */}
+      <section
+        className="spreadsheet-normalization-bridge panel-card"
+        style={{
+          marginTop: '16px',
+          padding: '16px 20px',
+          border: '1px solid color-mix(in srgb, var(--cyan) 30%, var(--line))',
+          background: 'color-mix(in srgb, var(--cyan) 5%, var(--surface))',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '12px',
+        }}
+      >
+        <div>
+          <span className="eyebrow" style={{ color: 'var(--cyan)' }}>¿Cómo se resuelven formalmente estas 3 anomalías?</span>
+          <strong style={{ display: 'block', fontSize: '13px', color: 'var(--ink)', marginTop: '2px' }}>
+            La respuesta científica es la Normalización: 1FN, 2FN y 3FN.
+          </strong>
+          <p style={{ margin: '4px 0 0', fontSize: '11px', color: 'var(--muted)', maxWidth: '680px', lineHeight: 1.5 }}>
+            Aprende a transformar una factura comercial de venta real paso a paso, eliminando redundancias y generando el Diagrama Entidad-Relación y el código de producción.
+          </p>
+        </div>
+        <button
+          type="button"
+          className="soft-button"
+          onClick={onComplete}
+          style={{ fontSize: '11px', color: 'var(--cyan)', borderColor: 'var(--cyan)', display: 'flex', alignItems: 'center', gap: '6px' }}
+        >
+          Iniciar ruta de modelado <ArrowRight size={13} />
+        </button>
+      </section>
     </motion.div>
   )
 }

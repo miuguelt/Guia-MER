@@ -2,16 +2,18 @@ import { Check, CircleHelp, Database, Lock, Search, ShieldCheck, Timer, Wrench }
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { missingTopics } from '../../data/ai'
+import type { AttemptRecord } from '../../hooks/useLocalProgress'
 import LearningToolkit from '../../components/LearningToolkit'
 import NormalizationExplorer from './NormalizationExplorer'
 
 interface Props {
   onComplete: () => void
+  onRecordAttempt?: (attempt: Omit<AttemptRecord, 'id' | 'timestamp'>) => void
 }
 
 const topicIcons = [Database, Timer, Lock, ShieldCheck, Search, Wrench, Check, CircleHelp]
 
-export default function MissingTopicsLab({ onComplete }: Props) {
+export default function MissingTopicsLab({ onComplete, onRecordAttempt }: Props) {
   const [selected, setSelected] = useState<string[]>([])
   const allSelected = selected.length === missingTopics.length
   const toggle = (title: string) =>
@@ -41,7 +43,7 @@ export default function MissingTopicsLab({ onComplete }: Props) {
       <LearningToolkit variant="quality" />
 
       {/* LABORATORIO INTERACTIVO DE NORMALIZACIÓN 1FN-3FN */}
-      <NormalizationExplorer />
+      <NormalizationExplorer onRecordAttempt={onRecordAttempt} />
 
       {/* MAPA DE AMPLIACIÓN */}
       <section className="topic-intro panel-card">
@@ -50,7 +52,17 @@ export default function MissingTopicsLab({ onComplete }: Props) {
             <span className="eyebrow">Mapa de Ampliación Profesional</span>
             <h2>Dimensiones críticas que acompañan al modelo de datos</h2>
           </div>
-          <span className="non-official">Operación · Seguridad · Evolución</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span className="non-official">Operación · Seguridad · Evolución</span>
+            <button
+              type="button"
+              className="soft-button"
+              onClick={() => setSelected(allSelected ? [] : missingTopics.map((t) => t.title))}
+              style={{ fontSize: '10px', padding: '4px 8px' }}
+            >
+              {allSelected ? 'Limpiar marcas' : 'Marcar las 8 como revisadas'}
+            </button>
+          </div>
         </div>
         <p>
           En proyectos reales de software, una base de datos debe resistir concurrencia, cumplir leyes de privacidad y soportar migraciones de esquema sin tiempo de inactividad. Marca cada dimensión para revisar su práctica:

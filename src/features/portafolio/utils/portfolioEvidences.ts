@@ -34,7 +34,10 @@ export function evaluatePortfolioEvidences(progressState: ProgressState): Eviden
     Boolean(progressState.aiLog.prompt.trim() && progressState.aiLog.assumptions.trim()) ||
     progressState.completed.includes('m6')
 
-  const isEv05Done = progressState.completed.includes('m7')
+  const hasMasteredNormalization =
+    progressState.skillProgress['mer.m7']?.status === 'mastered' ||
+    (progressState.skillProgress['mer.m7']?.successes ?? 0) >= 1
+  const isEv05Done = progressState.completed.includes('m7') || hasMasteredNormalization
   const isEv06Done = progressState.completed.includes('case')
 
   const c1 = EVIDENCE_CATALOG['MER-EV01']
@@ -109,13 +112,15 @@ export function evaluatePortfolioEvidences(progressState: ProgressState): Eviden
       ...c5,
       isCompleted: isEv05Done,
       detail: isEv05Done
-        ? 'Las dimensiones operativas y de normalización formal fueron auditadas y confirmadas.'
+        ? hasMasteredNormalization
+          ? 'Normalización formal (1FN-3FN) demostrada con éxito en la autoevaluación y dimensiones operativas auditadas.'
+          : 'Las dimensiones operativas y de normalización formal fueron auditadas y confirmadas.'
         : 'Pendiente completar la revisión de las dimensiones de normalización y seguridad.',
       diagnosticObs: isEv05Done
         ? 'El diseño integra normalización estricta, seguridad por diseño y previsión de cambios de esquema.'
         : 'Pendiente completar la revisión de las dimensiones en la estación 07.',
       indicators: [
-        { ...c5.indicatorTemplates[0], pass: progressState.completed.includes('m7') },
+        { ...c5.indicatorTemplates[0], pass: hasMasteredNormalization || progressState.completed.includes('m7') },
         { ...c5.indicatorTemplates[1], pass: progressState.completed.includes('m7') },
         { ...c5.indicatorTemplates[2], pass: progressState.completed.includes('m7') },
       ],

@@ -102,6 +102,62 @@ export default function HomeView({ completed, skillProgress, projectState, onSta
         </section>
       </div>
 
+      {/* BANNER DESTACADO: MASTERCLASS DE NORMALIZACIÓN 1FN-3FN */}
+      <section
+        className="normalization-featured-banner panel-card"
+        style={{
+          marginTop: '20px',
+          padding: '18px 22px',
+          border: '1px solid color-mix(in srgb, var(--cyan) 35%, var(--line))',
+          background: 'linear-gradient(135deg, color-mix(in srgb, var(--cyan) 8%, var(--surface)), var(--surface))',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '16px',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', maxWidth: '780px' }}>
+          <div
+            style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '10px',
+              background: 'color-mix(in srgb, var(--cyan) 15%, transparent)',
+              border: '1px solid var(--cyan)',
+              color: 'var(--cyan)',
+              display: 'grid',
+              placeItems: 'center',
+              flexShrink: 0,
+            }}
+          >
+            <Layers size={20} />
+          </div>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="eyebrow" style={{ color: 'var(--cyan)' }}>Laboratorio Maestro Interactivo</span>
+              <span className="label-pill" style={{ background: 'color-mix(in srgb, var(--cyan) 15%, transparent)', color: 'var(--cyan)', borderColor: 'var(--cyan)', fontSize: '9px', padding: '1px 7px' }}>
+                1FN · 2FN · 3FN
+              </span>
+            </div>
+            <strong style={{ fontSize: '15px', color: 'var(--ink)', display: 'block', margin: '3px 0' }}>
+              De la Factura Comercial al Modelo Relacional y al Código
+            </strong>
+            <p style={{ margin: 0, color: 'var(--muted)', fontSize: '11px', lineHeight: 1.5 }}>
+              Descubre con un caso práctico cómo desglosar un documento real de empresa, resolver el dilema del precio histórico, compilar el DER en Mermaid y generar las entidades en PostgreSQL, Prisma y Spring Boot.
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="primary-button"
+          onClick={() => onStart('m7')}
+          style={{ fontSize: '11px', padding: '9px 16px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+        >
+          Explorar Normalización <ArrowRight size={14} />
+        </button>
+      </section>
+
       <section className="project-ledger panel-card" aria-labelledby="project-ledger-title">
         <div className="card-heading">
           <div>

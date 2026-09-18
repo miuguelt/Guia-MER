@@ -1990,3 +1990,90 @@ button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid var
 .guided-case-model-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }.guided-case-model-actions .soft-button { color: var(--blue); }.guided-case-model-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 13px; margin-top: 14px; }.guided-case-model-grid .mermaid-preview { min-height: 430px; }.guided-case-sql-card { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: #08111f; }.guided-case-sql-card pre { max-height: 430px; overflow: auto; margin: 0; padding: 15px; color: #a7bdd9; font: 10px/1.6 "SFMono-Regular", Consolas, monospace; white-space: pre; }.guided-case-defense { margin-top: 16px; padding: 14px; border-left: 2px solid var(--cyan); background: color-mix(in srgb, var(--cyan) 6%, transparent); }.guided-case-defense p { color: var(--muted); font-size: 10px; line-height: 1.6; margin: 7px 0 0; }.guided-case-final-cta { border-color: color-mix(in srgb, var(--lime) 30%, var(--line)); background: color-mix(in srgb, var(--lime) 6%, var(--surface)); }.guided-case-final-cta .primary-button:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
 @media (max-width: 980px) { .guided-case-download, .guided-case-brief-grid, .guided-case-analysis-grid, .guided-case-model-grid { grid-template-columns: 1fr; }.guided-case-download { display: grid; }.guided-case-download-actions { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }.guided-case-download-actions small { align-self: center; }.guided-case-source-grid { grid-template-columns: 1fr; }.guided-case-step-layout { grid-template-columns: 1fr; }.guided-case-step-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }.guided-case-step-nav button { min-height: 66px; }.guided-case-inventory { max-height: none; } .gem-builder { grid-template-columns: 1fr; } .gem-onboarding-steps-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .gem-level-selector { grid-template-columns: 1fr; } }
 @media (max-width: 620px) { .guided-case-brief-card, .guided-case-actors-card, .guided-case-sources, .guided-case-stepper, .guided-case-requirements-card, .guided-case-inventory-card, .guided-case-result { padding: 17px; }.guided-case-scope-grid, .guided-case-requirement-summary, .guided-case-result-highlights, .guided-case-inventory { grid-template-columns: 1fr; }.guided-case-step-nav { grid-template-columns: 1fr 1fr; }.guided-case-step-nav button { min-height: 58px; }.guided-case-current-step { padding: 15px; }.guided-case-step-head { flex-wrap: wrap; }.guided-case-done { margin-left: 50px; }.guided-case-step-footer { align-items: flex-start; flex-direction: column; }.guided-case-step-footer .primary-button { width: 100%; }.guided-case-download-actions { align-items: stretch; flex-direction: column; }.guided-case-download-actions .primary-button, .guided-case-download-actions .soft-button { width: 100%; }.guided-case-download-actions small { align-self: flex-start; }.guided-case-model-actions .soft-button { flex: 1 1 45%; justify-content: center; }.guided-case-result-highlights > div { display: flex; align-items: center; gap: 10px; }.guided-case-result-highlights strong { min-width: 35px; } .gem-onboarding-columns { grid-template-columns: 1fr; } .gem-onboarding-steps-grid { grid-template-columns: 1fr; } .gem-builder { padding: 16px; } }
+
+/* ==========================================================================
+   LABORATORIO MAESTRO DE NORMALIZACIÓN (1FN, 2FN, 3FN)
+   ========================================================================== */
+.normalization-masterclass { margin-top: 24px; }
+.nm-invoice-paper {
+  background: color-mix(in srgb, var(--surface-2) 92%, #000);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  font-family: Inter, ui-monospace, Consolas, monospace;
+}
+:root[data-theme="light"] .nm-invoice-paper {
+  background: #ffffff;
+  border-color: rgba(21, 45, 70, 0.22);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  color: #152b43;
+}
+.nm-hotspot-zone {
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .2s ease;
+  margin-bottom: 12px;
+}
+.nm-hotspot-zone:hover {
+  filter: brightness(1.06);
+}
+.nm-dep-card {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.nm-dep-card:hover, .nm-dep-card.is-active {
+  border-color: var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 8%, var(--surface-2));
+}
+.nm-badge-pk {
+  display: inline-block;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--cyan) 20%, transparent);
+  color: var(--cyan);
+  font: 800 9px/1 "SFMono-Regular", Consolas, monospace;
+}
+.nm-badge-fk {
+  display: inline-block;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--amber) 20%, transparent);
+  color: var(--amber);
+  font: 800 9px/1 "SFMono-Regular", Consolas, monospace;
+}
+.nm-progress-bar-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px 0;
+  margin-bottom: 14px;
+}
+.nm-progress-step-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.nm-progress-step-pill.is-active {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 10%, var(--surface-2));
+  font-weight: 700;
+}
+.nm-progress-step-pill.is-done {
+  border-color: var(--lime);
+  color: var(--lime);
+}

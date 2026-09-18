@@ -223,6 +223,54 @@ export default function GuidedCase({ onComplete }: Props) {
         <div className="guided-case-model-actions"><button className="soft-button" type="button" onClick={() => setShowExpectedModel((value) => !value)}><Table2 size={14} /> {showExpectedModel ? 'Ocultar MER esperado' : 'Mostrar MER esperado'}</button><button className="soft-button" type="button" onClick={() => copy(guidedCaseMermaid, 'MERmaid')}><Clipboard size={14} /> {copied === 'MERmaid' ? 'Copiado' : 'Copiar Mermaid'}</button><button className="soft-button" type="button" onClick={() => downloadText('modelo-esperado-taller-ruta-7.mmd', guidedCaseMermaid, 'text/plain')}><Download size={14} /> Descargar .mmd</button><button className="soft-button" type="button" onClick={() => downloadText('ddl-esperado-taller-ruta-7.sql', guidedCaseSql, 'text/sql')}><Download size={14} /> Descargar .sql</button></div>
         {showExpectedModel && <div className="guided-case-model-grid"><MermaidPreview code={guidedCaseMermaid} /><div className="guided-case-sql-card"><div className="artifact-card-head"><span className="artifact-icon violet"><FileText size={15} /></span><span>DDL orientativo · PostgreSQL</span></div><pre>{guidedCaseSql}</pre></div></div>}
         <div className="guided-case-defense"><div className="guided-case-section-label"><Flag size={15} /> Defensa técnica mínima</div><p>“El modelo separa datos maestros de hechos transaccionales. Las relaciones N:M se resuelven con entidades asociativas que conservan sus propios atributos. Los precios aplicados no dependen del catálogo vigente, las PK son técnicas, los identificadores naturales tienen UNIQUE y las órdenes/pagos se protegen con RESTRICT para preservar la historia. Las decisiones aún no confirmadas quedan en preguntas abiertas.”</p></div>
+
+        {/* CONEXIÓN METODOLÓGICA: NORMALIZACIÓN FORMAL 1FN-3FN */}
+        <div
+          style={{
+            marginTop: '20px',
+            padding: '16px',
+            borderRadius: '10px',
+            background: 'var(--surface-2)',
+            border: '1px solid var(--line-strong)',
+            borderLeft: '4px solid var(--cyan)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <span style={{ color: 'var(--cyan)' }}><Sparkles size={16} /></span>
+            <strong style={{ fontSize: '13px', color: 'var(--ink)' }}>
+              Conexión Metodológica: ¿Cómo se aplican 1FN, 2FN y 3FN en este Taller?
+            </strong>
+          </div>
+          <p style={{ margin: '0 0 12px', fontSize: '11px', color: 'var(--muted)', lineHeight: 1.5 }}>
+            Al igual que en la <strong>Factura Comercial del Módulo 07</strong>, la <em>Orden de Servicio</em> física del taller automotriz no se guarda en una sola tabla plana. Se descompone rigurosamente para evitar anomalías operativas:
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '10px' }}>
+            <div style={{ padding: '10px', borderRadius: '6px', background: 'var(--surface)', border: '1px solid var(--line)' }}>
+              <strong style={{ fontSize: '11px', color: 'var(--cyan)', display: 'block', marginBottom: '4px' }}>
+                1FN · Atomicidad de Insumos
+              </strong>
+              <p style={{ margin: 0, fontSize: '10px', color: 'var(--muted)', lineHeight: 1.4 }}>
+                Los repuestos utilizados no se guardan como texto separado por comas. Cada ítem instalado en el carro se registra en su propia fila independiente.
+              </p>
+            </div>
+            <div style={{ padding: '10px', borderRadius: '6px', background: 'var(--surface)', border: '1px solid var(--line)' }}>
+              <strong style={{ fontSize: '11px', color: 'var(--lime)', display: 'block', marginBottom: '4px' }}>
+                2FN · Sin Dependencias Parciales
+              </strong>
+              <p style={{ margin: 0, fontSize: '10px', color: 'var(--muted)', lineHeight: 1.4 }}>
+                En <code>detalle_orden_repuesto</code>, el nombre del repuesto depende únicamente del <code>repuesto_id</code>, por lo que se traslada a la tabla maestra <code>REPUESTO</code>.
+              </p>
+            </div>
+            <div style={{ padding: '10px', borderRadius: '6px', background: 'var(--surface)', border: '1px solid var(--line)' }}>
+              <strong style={{ fontSize: '11px', color: 'var(--amber)', display: 'block', marginBottom: '4px' }}>
+                3FN & Snapshot Histórico
+              </strong>
+              <p style={{ margin: 0, fontSize: '10px', color: 'var(--muted)', lineHeight: 1.4 }}>
+                El <code>precio_unitario_aplicado</code> se congela en el detalle de la orden. Además, se separa <code>CLIENTE</code> de <code>VEHICULO</code> para evitar la transitividad (<em>placa → cliente_id → teléfono</em>).
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="final-cta guided-case-final-cta">

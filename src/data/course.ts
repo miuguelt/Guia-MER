@@ -41,8 +41,8 @@ export const courseModules: CourseModule[] = [
     description: 'Aprende a usar la IA como copiloto desde cero: empieza con preguntas simples y avanza hasta construir modelos completos.', color: 'cyan',
   },
   {
-    key: 'm7', number: '07', eyebrow: 'Cierre profesional', title: 'Lo que completa el modelo', shortTitle: 'Temas que faltan',
-    description: 'Conecta el diagrama con normalización, seguridad, pruebas, rendimiento y evolución.', color: 'lime',
+    key: 'm7', number: '07', eyebrow: 'Cierre profesional', title: 'Normalización 1FN-3FN y Calidad', shortTitle: 'Normalización formal',
+    description: 'Laboratorio de normalización formal (1FN, 2FN y 3FN desde facturas reales), seguridad, pruebas y evolución.', color: 'lime',
   },
   {
     key: 'case', number: '08', eyebrow: 'Caso integrador', title: 'De la evidencia al MER defendible', shortTitle: 'Caso práctico final',
